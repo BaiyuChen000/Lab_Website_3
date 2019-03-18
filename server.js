@@ -212,6 +212,24 @@ app.get('/team_stats', function(req, res) {
 	})
 });
 
+app.get('/player_info',function(req,res){
+	var query = 'SELECT * FROM football_players;';
+	db.any(query)
+    		.then(function (rows) {
+        		res.render('pages/player_info',{
+				my_title: "Player Info",
+				data: rows,
+			})
 
+    		})
+    		.catch(function (err) {
+        // display error message in case an error
+        		request.flash('error', err);
+        		res.render('pages/player_info',{
+				my_title: "Player Info",
+				data: '',
+			})
+    		})  
+});
 app.listen(3000);
 console.log('3000 is the magic port');
