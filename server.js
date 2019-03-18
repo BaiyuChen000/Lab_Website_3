@@ -218,5 +218,7 @@ app.get('/team_stats', function(req, res) {
 		})
 	})
 });
+
+
 app.listen(3000);
 console.log('3000 is the magic port');

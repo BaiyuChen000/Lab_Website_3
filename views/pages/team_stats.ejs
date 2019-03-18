@@ -20,10 +20,18 @@
 			</tr>
 			<%
 			if(visitor){
-				var winner="";
+				var winner='';
+				var wintime = 0;
+				var losetime = 0;
 				visitor.forEach(function(item){
-					if(item.home_score > item.visitor_score){winner = 'CU Boulder';}
-					else{winner = item.vistor_name;}
+					if(item.home_score > item.visitor_score){				       		winner = 'CU Boulder';
+						wintime++;
+					}
+					else{
+					
+						winner = item.visitor_name;
+						losetime++
+					}
 				
 			%>
 			<tr>
@@ -53,13 +61,9 @@
 				<th>Losses</th>
 			</tr>
 			<tr>
-				<td> <%if(win){%>
-					<%- win.col%>
-					<%}%><!-- TODO: Display the total number of wins here.  
+				<td> <%-wintime%><!-- TODO: Display the total number of wins here.  
 							    This value should come from your server.js files query, don't calculate it in this file! --></td>
-				<td><%if(lose){%>
-                                        <%- lose.col%>
-                                        <%}%> <!-- TODO: Display the total number of losses here.  
+				<td><%-losetime%> <!-- TODO: Display the total number of losses here.  
 							    This value should come from your server.js files query, don't calculate it in this file! --></td>
 			</tr>
 		</table>
