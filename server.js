@@ -186,5 +186,37 @@ app.post('/home/pick_color', function(req, res) {
             })
     });
 });
+
+app.get('/team_stats', function(req, res) {
+	
+	var game = 'select * from football_games';
+	var win = 'select count(*) as col from football_games where visitor_score < home_score';
+	var lose = 'select count(*) as col from football_games where  visitor_score >  home_score';
+	db.task('get-everything', task => {
+    		return task.batch([
+        		task.any(game),
+        		task.any(win),
+        		task.any(lose)
+    		]);
+	})
+	.then(data => {
+		res.render('pages/team_stats',{
+			my_title: "Team Stats",
+			visitor: data[0],
+			win: data[1][0],
+			lose: data[2][0]
+		})
+	})
+	.catch(error => {
+    // display error message in case an error
+        	request.flash('error', err);
+        		res.render('pages/team_stats',{
+				my_title: "Team Stats",
+				vistor: '',
+				win: '',
+				lose: ''
+		})
+	})
+});
 app.listen(3000);
 console.log('3000 is the magic port');
